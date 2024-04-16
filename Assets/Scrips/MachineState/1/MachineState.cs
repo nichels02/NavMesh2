@@ -36,11 +36,12 @@ public class MachineState : MonoBehaviour
             {
                 if (CurrentState != null)
                 {
-                    CurrentState.Exit();
+                    //CurrentState.Exit();
                     CurrentState.enabled = false;
 
                     CurrentState = item;
                     CurrentState.enabled=true;
+                    print("1");
                     CurrentState.Etapa = EtapaState.Enter;
                 }
                    

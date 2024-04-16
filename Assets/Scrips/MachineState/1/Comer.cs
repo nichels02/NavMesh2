@@ -19,38 +19,30 @@ public class Comer : State
      
     public override void Enter()
     {
-        print("1");
-        if (EstaInvertido)
+        if (ElArrive.target == null)
         {
             print("2");
-            ReverseArray();
-            EstaInvertido = false;
-            
+            ElArrive.target = ListaDeMovimiento[0];
+            ElArrive.CambiarPuntoDeSeguimiento();
         }
-        if (RecienEmpezo)
+        else if (ElArrive.agent.remainingDistance <= ElArrive.agent.stoppingDistance)
         {
-            RecienEmpezo = false;
-            ElPathFollowing.currentPointIndex = 0;
-            ElPathFollowing.ListaDeTransforms = ListaDeMovimiento;
-        }
-
-        print("3");
-        
-        ElPathFollowing.NextPoint();
-        ElArrive.Finalizo = false;
-        if (ElArrive.Finalizo)
-        {
-            print("4");
+            print("3");
+            ElArrive.target = null;
             Etapa = EtapaState.Execute;
         }
-        print("5");
-
+        else
+        {
+            LasStats.hambre = Mathf.Clamp(LasStats.hambre - Time.deltaTime * 2.5f, 0, 100);
+            LasStats.sueno = Mathf.Clamp(LasStats.sueno - Time.deltaTime * 0.25f, 0, 100);
+            LasStats.wc = Mathf.Clamp(LasStats.wc - Time.deltaTime * 1.5f, 0, 100);
+        }
     }
     public override void Execute()
     {
         LasStats.hambre = Mathf.Clamp(LasStats.hambre + Time.deltaTime * 20, 0, 100);
-        LasStats.sueno = Mathf.Clamp(LasStats.sueno - Time.deltaTime * 0.5f, 0, 100);
-        LasStats.wc = Mathf.Clamp(LasStats.wc - Time.deltaTime * 3, 0, 100);
+        LasStats.sueno = Mathf.Clamp(LasStats.sueno - Time.deltaTime * 0.25f, 0, 100);
+        LasStats.wc = Mathf.Clamp(LasStats.wc - Time.deltaTime * 1.5f, 0, 100);
 
         if (LasStats.hambre == 100)
         {
@@ -60,23 +52,22 @@ public class Comer : State
     }
     public override void Exit()
     {
-        if (!EstaInvertido)
+        if (ElArrive.target == null)
         {
-            ReverseArray();
-            EstaInvertido = true;
-            
+            ElArrive.target = ListaDeMovimiento[1];
+            ElArrive.CambiarPuntoDeSeguimiento();
         }
-        if (!RecienEmpezo)
+        else if (ElArrive.agent.remainingDistance <= ElArrive.agent.stoppingDistance)
         {
-            RecienEmpezo = true;
-            ElPathFollowing.ListaDeTransforms = ListaDeMovimiento;
-            ElPathFollowing.currentPointIndex = ElPathFollowing.ListaDeTransforms.Length;
-        }
-        ElArrive.Finalizo = false;
-        ElPathFollowing.NextPoint();
-        if (ElArrive.Finalizo)
-        {
+            ElArrive.target = null;
+            Etapa = EtapaState.Enter;
             m_MachineState.NextState(TypeState.Jugar);
+        }
+        else
+        {
+            LasStats.hambre = Mathf.Clamp(LasStats.hambre - Time.deltaTime * 2.5f, 0, 100);
+            LasStats.sueno = Mathf.Clamp(LasStats.sueno - Time.deltaTime * 0.25f, 0, 100);
+            LasStats.wc = Mathf.Clamp(LasStats.wc - Time.deltaTime * 1.5f, 0, 100);
         }
     }
 }

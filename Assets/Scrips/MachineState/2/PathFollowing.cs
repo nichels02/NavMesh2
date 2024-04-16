@@ -58,7 +58,7 @@ public class PathFollowing : MonoBehaviour
             }
             if(currentPointIndex>ListaDeTransforms.Length)
             {
-                Elsegidor.Finalizo = true;
+                //Elsegidor.Finalizo = true;
             }
 
 
@@ -66,9 +66,12 @@ public class PathFollowing : MonoBehaviour
         }
         else
         {
+            /*
             if (Elsegidor.Finalizo == false)
                 Elsegidor.target = ListaDeTransforms[currentPointIndex];
+            */
             return false;
+            
         }
     }
 

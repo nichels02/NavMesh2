@@ -11,8 +11,9 @@ public class State : MonoBehaviour
     public stats LasStats;
 
     public Arrive ElArrive;
-    public PathFollowing ElPathFollowing;
+    //public PathFollowing ElPathFollowing;
     public Transform[] ListaDeMovimiento = new Transform[1];
+    public int index;
     public bool EstaInvertido;
     public bool RecienEmpezo;
     public virtual void LoadComponent()
@@ -21,7 +22,7 @@ public class State : MonoBehaviour
         m_MachineState = GetComponent<MachineState>();
         LasStats = GetComponent<stats>();
         ElArrive = GetComponent<Arrive>();
-        ElPathFollowing = GetComponent<PathFollowing>();
+        //ElPathFollowing = GetComponent<PathFollowing>();
     }
     public virtual void Enter( )
     {

@@ -8,7 +8,7 @@ public class Arrive : MonoBehaviour
     public Transform target;
  
 
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     private void Start()
     {
@@ -16,11 +16,10 @@ public class Arrive : MonoBehaviour
          
     }
 
-    private void Update()
-    {
-        if (agent == null || target == null)
-            return;
 
+
+    public void CambiarPuntoDeSeguimiento()
+    {
         agent.SetDestination(target.position);
     }
 }
