@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum QueAccion
+{
+    wander,
+    SensorDetected
+}
+
 public class Arrive : MonoBehaviour
 {
+    public QueAccion LaAccion = QueAccion.wander;
     #region arrive
     [Header("Arrive")]
     public Transform target;

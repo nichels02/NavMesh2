@@ -27,7 +27,6 @@ public class Comer : State
         }
         else if (ElArrive.agent.remainingDistance <= ElArrive.agent.stoppingDistance)
         {
-            print("3");
             ElArrive.target = null;
             Etapa = EtapaState.Execute;
         }
