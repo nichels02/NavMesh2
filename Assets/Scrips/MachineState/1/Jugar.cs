@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class Jugar : State
 {
+    [SerializeField] VisionSensor ElSensor;
      
     void Start()
     {
@@ -22,13 +24,29 @@ public class Jugar : State
 
     public override void Enter()
     {
+        ElArrive.randomPoint();
         Etapa = EtapaState.Execute;
     }
     public override void Execute()
     {
-        LasStats.hambre = Mathf.Clamp(LasStats.hambre - Time.deltaTime * 2.5f, 0, 100);
-        LasStats.sueno = Mathf.Clamp(LasStats.sueno - Time.deltaTime * 0.25f, 0, 100);
-        LasStats.wc = Mathf.Clamp(LasStats.wc - Time.deltaTime * 1.5f, 0, 100);
+        if (ElArrive.agent.remainingDistance < ElArrive.agent.stoppingDistance)
+        {
+            ElArrive.randomPoint();
+        }
+        /*
+        else if (ElSensor.EnemyView != null)
+        {
+            ElArrive.target = ElSensor.EnemyView.transform;
+            ElArrive.CambiarPuntoDeSeguimiento();
+        }
+        */
+        else
+        {
+            LasStats.hambre = Mathf.Clamp(LasStats.hambre - Time.deltaTime * 2.5f, 0, 100);
+            LasStats.sueno = Mathf.Clamp(LasStats.sueno - Time.deltaTime * 0.25f, 0, 100);
+            LasStats.wc = Mathf.Clamp(LasStats.wc - Time.deltaTime * 1.5f, 0, 100);
+        }
+        
 
         if (LasStats.wc == 0)
         {
